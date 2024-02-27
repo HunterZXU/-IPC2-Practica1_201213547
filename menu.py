@@ -22,21 +22,12 @@ def menu_Principal():
             seleccion = int(input("Ingrese un valor: "))
             if seleccion == 1:
                 limpiar_consola()
-                print("Proceso Completado, se ha almacenado la Informacion")
-                time.sleep(3)
-                limpiar_consola()
-                menu_Principal()
+                registrar_Producto()
+                #limpiar_consola()
+                #menu_Principal()
             elif seleccion == 2:
                 limpiar_consola()
-                print("Se han cargado las instrucciones correctamente, se procede ha realizar cada operacion")
-                time.sleep(5)
-                limpiar_consola()
-                print("="*75)
-                print("="*75)
-                print("Proceso Completado")
-                time.sleep(3)
-                limpiar_consola()
-                menu_Principal()
+                registrar_Cliente()
             elif seleccion == 3:
                 limpiar_consola()
                 submenu()
@@ -67,6 +58,15 @@ def menu_Principal():
 
 #Submenu de compra
 def submenu():
+    verificacion = str(input("Ingrese numero de NIT: "))
+    datos_cliente = None
+    encontro = False
+    for cliente in lista_cliente:
+        if verificacion == cliente.nit:
+            datos_cliente = cliente
+            encontro = True #Bandera de verificacion
+            break
+    print(f'Bienvenid@ {datos_cliente.nombre_cliente}')    
     subtitulo = f"Menu Compra"
     subtitulo = subtitulo.center(37)
     print("="*39)
@@ -110,11 +110,11 @@ def registrar_Producto():
 
         while True:
             try:
-                elegir = str(input("¿Desea ingresar otro producto? S/N"))
-                if elegir == "s" or "S":
+                elegir = str(input("¿Desea ingresar otro producto? S/N: "))
+                if elegir == "S":
                     limpiar_consola()
                     registrar_Producto()
-                elif elegir == "n" or "N":
+                elif elegir == "N":
                     limpiar_consola()
                     menu_Principal()
             except ValueError:
@@ -141,11 +141,11 @@ def registrar_Cliente():
 
         while True:
             try:
-                elegir = str(input("¿Desea Registrar otro cliente? S/N"))
-                if elegir == "s" or "S":
+                elegir = str(input("¿Desea Registrar otro cliente? S/N: "))
+                if elegir == "S":
                     limpiar_consola()
                     registrar_Cliente()
-                elif elegir == "n" or "N":
+                elif elegir == "N":
                     limpiar_consola()
                     menu_Principal()
             except ValueError:
@@ -157,15 +157,15 @@ def reporte():
 
 #Limpiar consola(Linux / Windows)
 def limpiar_consola():
-    os.system('cls' if os.name == 'nt' else 'clear') #Limpiar consola de sistema (Windows o Linux)
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #Creacion de listas para almacenar la informacion
 def ejemplo_lista():
     
     #Ejemplo de datos para agregar para probar funcionalidad
-    c1 = informacion.cliente("Adam Navas", "adam_navas@hotmail.com",1234564-8 )
-    c2 = informacion.cliente("Tania Chacon", "aTania@gmail.com", 2345671-8)
-    c3 = informacion.cliente("Pedro Josue", "pedro-j@yahoo.com", 9876543-2)
+    c1 = informacion.cliente("Adam Navas", "adam_navas@hotmail.com","1234564-8" )
+    c2 = informacion.cliente("Tania Chacon", "aTania@gmail.com", "2345671-8")
+    c3 = informacion.cliente("Pedro Josue", "pedro-j@yahoo.com", "9876543-2")
     p1 = informacion.producto("PR001", "Salsa de Tomate", "salsa marca naturas", 8.50)
     p2 = informacion.producto("PR002", "Salsa de Jitomate", "salsa marca naturas", 6.50)
     p3 = informacion.producto("PR003", "Jalea de fresa", "Jalea marca anabely", 7.25)
@@ -175,9 +175,11 @@ def ejemplo_lista():
     lista_producto.append(p1)
     lista_producto.append(p2)
     lista_producto.append(p3)
+
 #Main
 if __name__ == "__main__":
+    id = 1
     lista_producto = []
     lista_cliente = []
-    ejemplo_lista
+    ejemplo_lista()
     menu_Principal()
